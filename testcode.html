@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Portfolio Website</title>
+	<style type="text/css">
+		body {
+			background-color: #f2f2f2;
+			color: #333;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			line-height: 1.5;
+			margin: 0;
+			padding: 0;
+		}
+
+		h1, h2, h3, h4, h5, h6 {
+			color: #333;
+			font-weight: bold;
+			margin-bottom: 0.5em;
+		}
+
+		h1 {
+			font-size: 2.5em;
+			line-height: 1.2;
+			margin-top: 0;
+		}
+
+		h2 {
+			font-size: 2em;
+			line-height: 1.3;
+		}
+
+		h3 {
+			font-size: 1.5em;
+			line-height: 1.4;
+		}
+
+		p {
+			margin-bottom: 1.5em;
+		}
+
+		a {
+			color: #00bfff;
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+        header {
+            background-color :#333; 
+            color :#fff; 
+            padding :20px; 
+            text-align :center; 
+        }
+
+        nav{
+            background-color :#333; 
+            color :#fff; 
+            display:flex; 
+            justify-content :space-between; 
+            align-items:center; 
+            padding :10px; 
+        }
+
+        nav ul{
+            display:flex; 
+            justify-content :space-between; 
+            align-items:center; 
+        }
+
+        nav ul li{
+            list-style:none; 
+        }
+
+        nav ul li a{
+            color:#fff; 
+            text-decoration:none; 
+            padding :10px 20px; 
+        }
+
+        nav ul li a:hover{
+            background-color:#fff; 
+            color:#333;  
+        }
+        
+        nav ul li a:focus{
+            outline:none;  
+        }
+        
+        nav ul li a:hover:focus{
+            outline:none !important;  
+        }
+        
+        nav ul li a:focus-visible{
+             outline:none !important;  
+        }
+        
+        nav ul li a:focus:not(:focus-visible){
+             outline:none !important;  
+        }
+
+        .container{
+            display:flex; 
+            flex-direction :column; 
+            justify-content:center; 
+            align-items:center; 
+            height :100vh; 
+            width :100vw; 
+            background-color :#f2f2f2; 
+        }
+
+        .card{
+            display:flex; 
+            flex-direction :column; 
+            justify-content:center; 
+            align-items:center; 
+            height :50vh; 
+            width :50vw; 
+            background-color :#00bfff; 
+        }
+
+        .card h1{
+            color:#333; 
+            font-size :3rem; 
+        }
+
+        .card p{
+            color:#333; 
+            font-size :1rem; 
+        }
+
+        .card button{
+            background-color:#333; 
+            color:#fff; 
+            border:none; 
+            padding :10px 20px; 
+            margin-top :20px; 
+        }
+        
+        .card button:hover{
+            background-color:#fff; 
+            color:#333;  
+        }
+        
+        .card button:focus{
+             outline:none !important ;  
+             box-shadow:none !important ;  
+             border:none !important ;  
+             -webkit-box-shadow:none !important ;  
+             -moz-box-shadow:none !important ;  
+         }
+        
+    </style>
+</head>
+<body>
+    <header>
+      <h1>Portfolio Website</h1>
+    </header>
+
+    <nav>
+      <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Works</a></li>
+          <li><a href="#">Professional History</a></li>
+          <li><a href="#">Education</a></li>
+          <li><a href="#">Resume</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <div class="card">
+          <h1>Professional Quantity Surveying and Full Stack Developer</h1>
+          <p>Minimalistic design with orange as the primary color and grey near black and white as the secondary colors.</p>
+          <button>Get Started</button>
+      </div>
+    </div>
+
+    <footer style="background-color:#333;color:#fff;padding:20

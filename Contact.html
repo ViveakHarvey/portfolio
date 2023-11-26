@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Babylon.js Sphere Example</title>
+    <style>
+        html, body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    </style>
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+</head>
+<body>
+    <canvas id="renderCanvas"></canvas>
+    <script>
+        // Get the canvas element
+        const canvas = document.getElementById("renderCanvas");
+        // Create the BABYLON 3D engine
+        const engine = new BABYLON.Engine(canvas, true);
+        // Create the scene
+        const createScene = function () {
+            // Create a basic scene
+            const scene = new BABYLON.Scene(engine);
+            // Create a camera
+            const camera = new BABYLON.ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 2.5, 5, new BABYLON.Vector3(0, 0, 0));
+            camera.attachControl(canvas, true);
+            // Create a light
+            const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0));
+            // Create a sphere
+            const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2});
+            // Return the scene
+            return scene;
+        };
+        // Call the createScene function
+        const scene = createScene();
+        // Run the render loop
+        engine.runRenderLoop(function () {
+            scene.render();
+        });
+        // Resize the engine when the window is resized
+        window.addEventListener("resize", function () {
+            engine.resize();
+        });
+    </script>
+</body>
+</html>
