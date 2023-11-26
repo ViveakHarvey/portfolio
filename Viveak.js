@@ -19,7 +19,7 @@ const createScene = function () {
     camera.autoRotationBehavior.idleRotationWaitTime = 1000; // Adjust the wait time as needed
     BABYLON.SceneLoader.ImportMesh(
         '',
-        '/',
+        './',
         'Bottle_1.gltf',
         scene,
         function(meshes){
@@ -53,7 +53,7 @@ const createScene_2 = function () {
     const light_2 = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0));
     BABYLON.SceneLoader.ImportMesh(
         '',
-        '/',
+        './',
         'Batman.gltf',
         scene_2,
         function (meshes_2) {
