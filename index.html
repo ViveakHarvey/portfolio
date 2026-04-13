@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -515,7 +515,7 @@
 
     .globe-stage {
       position:relative;
-      min-height:720px;
+      min-height:900px;
       background:radial-gradient(circle at center, #0a1020 0%, #03050a 55%, #000 100%);
     }
     #controls {
@@ -590,6 +590,93 @@
     #popup::-webkit-scrollbar { width:6px; }
     #popup::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.22); border-radius:10px; }
     #popup.open { transform:translateX(0); }
+    .globe-details {
+      display:none;
+      margin-top:16px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      padding:20px;
+      position:relative;
+      z-index:1;
+    }
+    .globe-details-head {
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      padding-bottom:14px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:16px;
+    }
+    .globe-details-label {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:10px;
+    }
+    .globe-details-label::before{
+      content:"";
+      width:24px;
+      height:1px;
+      background:linear-gradient(90deg, var(--gold), transparent);
+    }
+    .globe-details-head h2 {
+      margin:0 0 8px;
+      font-size:clamp(22px, 3vw, 32px);
+      line-height:1.1;
+      letter-spacing:-.03em;
+    }
+    .globe-details-head p {
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+    .globe-details-body {
+      color:var(--text);
+      line-height:1.75;
+      font-size:14px;
+    }
+    .globe-details-body .popup-section {
+      margin-top:0;
+      padding-top:0;
+      border-top:0;
+    }
+    .globe-details-body .popup-section + .popup-section {
+      margin-top:18px;
+      padding-top:18px;
+      border-top:1px solid var(--line);
+    }
+    .globe-details-body .subline {
+      color:var(--muted);
+      font-size:12px;
+    }
+    .globe-details-body ul {
+      color:var(--muted);
+    }
+    .globe-details-reset {
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      border-radius:999px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-size:12px;
+      transition:transform .2s ease, background .2s ease, border-color .2s ease;
+      white-space:nowrap;
+    }
+    .globe-details-reset:hover {
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.07);
+      border-color:rgba(255,255,255,.18);
+    }
+
 
     #close {
       position:absolute;
@@ -663,7 +750,7 @@
     #globeViz {
       width:100%;
       height:100%;
-      min-height:760px;
+      min-height:840px;
       display:block;
     }
     #globeViz canvas {
@@ -783,8 +870,8 @@
       .hero-side { order:-1; }
       .strip, .viz-grid { grid-template-columns:1fr 1fr; }
       .competency-grid { grid-template-columns:1fr; }
-      .globe-stage { min-height:640px; }
-      #globeViz { height:640px; }
+      .globe-stage { min-height:875px; }
+      #globeViz { height:875px; }
     }
     @media (max-width: 720px){
       .nav { flex-direction:column; align-items:flex-start; }
@@ -796,10 +883,12 @@
       .strip, .viz-grid { grid-template-columns:1fr; }
       .bar-row { flex-direction:column; align-items:stretch; gap:8px; }
       .bar-label { width:auto; }
-      .globe-stage { min-height:580px; }
-      #globeViz { height:580px; }
+      .globe-stage { min-height:800px; }
+      #globeViz { height:800px; }
       #controls { left:12px; top:12px; right:12px; flex-wrap:wrap; }
       .globe-status { top:104px; left:12px; right:12px; max-width:none; }
+      #popup { display:none; }
+      .globe-details { display:block; }
       main { padding-top: 110px; }
     }
   
@@ -911,7 +1000,7 @@
     }
     .globe-stage {
       position:relative;
-      min-height:760px;
+      min-height:840px;
       background:radial-gradient(circle at center, #0a1020 0%, #03050a 55%, #000 100%);
       border:1px solid var(--line);
       border-radius:28px;
@@ -1311,6 +1400,28 @@
         min-height:116px;
       }
       .plugin-command-grid { grid-template-columns:1fr; }
+      .globe-stage {
+        min-height:460px;
+        touch-action:pan-y;
+      }
+      #globeViz {
+        min-height:460px;
+        touch-action:pan-y;
+      }
+      .globe-details {
+        margin-top:12px;
+        max-height: none;
+      }
+      .globe-details-body {
+        max-height: 34vh;
+        overflow:auto;
+        padding-right:4px;
+      }
+      .hint {
+        left:12px;
+        right:12px;
+        bottom:12px;
+      }
     }
     @media (max-width: 480px) {
       .media-track { grid-template-columns:1fr; }
@@ -1868,6 +1979,20 @@
             <div class="hint">Click a highlighted country to focus and open details</div>
             <div id="globeViz"></div>
           </div>
+
+          <div class="globe-details" id="globeDetails" aria-live="polite">
+            <div class="globe-details-head">
+              <div>
+                <div class="globe-details-label">Selected location</div>
+                <h2 id="mobileCountryTitle">Select a country</h2>
+                <p id="mobileCountryMeta">Tap a highlighted country on the globe</p>
+              </div>
+              <button class="globe-details-reset" id="mobileClose" type="button">Clear</button>
+            </div>
+            <div id="mobileCountryInfo" class="globe-details-body">
+              Click a highlighted country to see your experience.
+            </div>
+          </div>
         </div>
       </section>
 
@@ -2100,8 +2225,66 @@
     const workBtn = document.getElementById('workBtn');
     const projectBtn = document.getElementById('projectBtn');
     const globeStatus = document.getElementById('globeStatus');
+    const mobileTitleEl = document.getElementById('mobileCountryTitle');
+    const mobileMetaEl = document.getElementById('mobileCountryMeta');
+    const mobileInfoEl = document.getElementById('mobileCountryInfo');
+    const mobileCloseBtn = document.getElementById('mobileClose');
 
     let globe = null;
+    let selectedCountry = null;
+
+    function isMobileGlobe() {
+      return window.matchMedia('(max-width: 720px)').matches;
+    }
+
+    const DEFAULT_GLOBE_VIEW = { lat: 0, lng: 0, altitude: 1.54 };
+    const MOBILE_FOCUS_GLOBE_ALTITUDE = 1.08;
+    const DESKTOP_FOCUS_GLOBE_ALTITUDE = 1.18;
+    const DESKTOP_POPUP_LNG_BIAS = 18;
+
+    function applyGlobeInteractionMode() {
+      if (!globe) return;
+      const controls = globe.controls();
+      const mobile = isMobileGlobe();
+      controls.autoRotate = selectedCountry ? false : !mobile;
+      controls.autoRotateSpeed = 0.22;
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.08;
+      controls.minDistance = mobile ? 180 : 170;
+      controls.maxDistance = mobile ? 520 : 560;
+      controls.zoomSpeed = 0;
+      controls.enableZoom = false;
+      controls.enableRotate = !selectedCountry;
+      controls.enablePan = false;
+    }
+
+    function resetGlobeView(animate = true) {
+      if (!globe) return;
+      globe.pointOfView(DEFAULT_GLOBE_VIEW, animate ? 900 : 0);
+      applyGlobeInteractionMode();
+    }
+
+    function restoreGlobeZoomOnly(animate = true) {
+      if (!globe) return;
+      globe.pointOfView({ altitude: DEFAULT_GLOBE_VIEW.altitude }, animate ? 700 : 0);
+      applyGlobeInteractionMode();
+    }
+
+    function focusCountryView(country, coords, animate = true) {
+      if (!globe) return;
+      const fallback = countryCoords?.[country] || {};
+      const mobile = isMobileGlobe();
+      const lat = Number.isFinite(coords?.lat) ? coords.lat : (Number.isFinite(fallback.lat) ? fallback.lat : 20);
+      const lng = Number.isFinite(coords?.lng) ? coords.lng : (Number.isFinite(fallback.lng) ? fallback.lng : 0);
+      const focusLng = mobile ? lng : lng + DESKTOP_POPUP_LNG_BIAS;
+      const focusAltitude = mobile ? MOBILE_FOCUS_GLOBE_ALTITUDE : DESKTOP_FOCUS_GLOBE_ALTITUDE;
+      globe.pointOfView({ lat, lng: focusLng, altitude: focusAltitude }, animate ? 1250 : 0);
+      const controls = globe.controls();
+      controls.autoRotate = false;
+      controls.enableZoom = false;
+      controls.enableRotate = false;
+      controls.enablePan = false;
+    }
 
     if (window.Globe && document.getElementById('globeViz')) {
       try {
@@ -2119,13 +2302,7 @@
       .atmosphereAltitude(0.16)
       .enablePointerInteraction(true);
 
-    globe.controls().autoRotate = true;
-    globe.controls().autoRotateSpeed = 0.22;
-    globe.controls().enableDamping = true;
-    globe.controls().dampingFactor = 0.08;
-    globe.controls().minDistance = 170;
-    globe.controls().maxDistance = 560;
-    globe.controls().zoomSpeed = 0.65;
+    applyGlobeInteractionMode();
 
     function normalizeCountryName(featureOrName) {
       const raw = typeof featureOrName === 'string'
@@ -2180,62 +2357,98 @@
       globeStatus.textContent = `${mode}: ${markers.length} location${markers.length === 1 ? '' : 's'} shown. ${outlineNote}`;
     }
 
-    function renderCountryDetails(country) {
+    function buildCountryDetails(country) {
       const entries = getEntries(country);
-      titleEl.textContent = country;
-
       if (!entries.length) {
-        metaEl.textContent = 'No matching entries for this tab';
-        infoEl.innerHTML = '<p>No additional details available.</p>';
-        return;
+        return {
+          title: country,
+          meta: 'No matching entries for this tab',
+          body: '<p>No additional details available.</p>'
+        };
       }
-      metaEl.textContent = currentTab === WORK_TAB ? 'On-site / Remote experience' : 'Project history';
-      infoEl.innerHTML = entries.map(entry => {
-        const bullets = (entry.responsibilities || []).map(item => `<li>${item}</li>`).join('');
-        return `
-          <div class="popup-section">
-            <h4>${entry.company || entry.project || 'Experience'}</h4>
-            <p class="subline">${entry.period || ''}${entry.mode ? ` / ${entry.mode}` : ''}</p>
-            <p class="subline">${entry.place || ''}</p>
-            <p class="subline">${entry.industry || ''}</p>
-            <ul>${bullets}</ul>
-          </div>
-        `;
-      }).join('');
+
+      return {
+        title: country,
+        meta: currentTab === WORK_TAB ? 'On-site / Remote experience' : 'Project history',
+        body: entries.map(entry => {
+          const bullets = (entry.responsibilities || []).map(item => `<li>${item}</li>`).join('');
+          return `
+            <div class="popup-section">
+              <h4>${entry.company || entry.project || 'Experience'}</h4>
+              <p class="subline">${entry.period || ''}${entry.mode ? ` / ${entry.mode}` : ''}</p>
+              <p class="subline">${entry.place || ''}</p>
+              <p class="subline">${entry.industry || ''}</p>
+              <ul>${bullets}</ul>
+            </div>
+          `;
+        }).join('')
+      };
     }
 
-    function openPopup(country) {
+    function renderCountryDetails(country) {
+      const data = buildCountryDetails(country);
+      titleEl.textContent = data.title;
+      metaEl.textContent = data.meta;
+      infoEl.innerHTML = data.body;
+    }
+
+    function renderMobileCountryDetails(country) {
+      if (!mobileTitleEl || !mobileMetaEl || !mobileInfoEl) return;
+      const data = buildCountryDetails(country);
+      mobileTitleEl.textContent = data.title;
+      mobileMetaEl.textContent = data.meta;
+      mobileInfoEl.innerHTML = data.body;
+    }
+
+    function renderMobileDefault() {
+      if (!mobileTitleEl || !mobileMetaEl || !mobileInfoEl) return;
+      mobileTitleEl.textContent = 'Select a country';
+      mobileMetaEl.textContent = 'Tap a highlighted country on the globe';
+      mobileInfoEl.innerHTML = 'Click a highlighted country to see your experience.';
+    }
+
+    function openPopup(country, coords) {
+      selectedCountry = country;
+      focusCountryView(country, coords, true);
+      if (isMobileGlobe()) {
+        renderMobileCountryDetails(country);
+        popup.classList.remove('open');
+        return;
+      }
       renderCountryDetails(country);
       popup.classList.add('open');
     }
 
-    function closePopup() {
+    function closePopup(mode = 'zoomOnly') {
+      const hadSelection = !!selectedCountry;
+      selectedCountry = null;
       popup.classList.remove('open');
+      renderMobileDefault();
       if (!globe) return;
-      globe.controls().enabled = true;
-      globe.controls().autoRotate = true;
+
+      if (mode === 'reset') {
+        resetGlobeView(true);
+        return;
+      }
+
+      if (isMobileGlobe() && hadSelection) {
+        restoreGlobeZoomOnly(true);
+        return;
+      }
+
+      resetGlobeView(true);
     }
 
     function focusMarker(marker) {
       const country = marker.country || marker.name;
       if (!country || !hasEntries(country)) return;
-      globe.controls().autoRotate = false;
-      globe.controls().enabled = false;
-      globe.pointOfView({ lat: marker.lat ?? 20, lng: (marker.lng ?? 0) + 22, altitude: 0.72 }, 900);
-      openPopup(country);
+      openPopup(country, { lat: marker.lat, lng: marker.lng });
     }
 
     function focusCountry(polygon, coords) {
       const country = normalizeCountryName(polygon);
       if (!hasEntries(country)) return;
-
-      globe.controls().autoRotate = false;
-      globe.controls().enabled = false;
-      const baseLng = coords?.lng ?? 0;
-      const offsetLng = baseLng + 22;
-
-      globe.pointOfView({ lat: coords?.lat ?? 20, lng: offsetLng, altitude: 0.72 }, 900);
-      openPopup(country);
+      openPopup(country, coords);
     }
 
     function applyTab(tab) {
@@ -2244,7 +2457,7 @@
       projectBtn.classList.toggle('active', tab === PROJECT_TAB);
       workBtn.setAttribute('aria-pressed', String(tab === WORK_TAB));
       projectBtn.setAttribute('aria-pressed', String(tab === PROJECT_TAB));
-      closePopup();
+      closePopup('reset');
       const tabMarkers = getTabMarkers(tab);
       updateGlobeStatus(tab, tabMarkers);
 
@@ -2303,8 +2516,24 @@
     workBtn.addEventListener('click', () => applyTab(WORK_TAB));
     projectBtn.addEventListener('click', () => applyTab(PROJECT_TAB));
     document.getElementById('close').addEventListener('click', closePopup);
+    if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closePopup);
+
+    window.addEventListener('resize', () => {
+      if (!globe) return;
+      if (selectedCountry) {
+        focusCountryView(selectedCountry, null, false);
+        if (isMobileGlobe()) {
+          renderMobileCountryDetails(selectedCountry);
+        } else {
+          renderCountryDetails(selectedCountry);
+        }
+      } else {
+        resetGlobeView(false);
+      }
+    });
 
     applyTab(WORK_TAB);
+    resetGlobeView(false);
 
     fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
       .then(res => res.json())
@@ -2313,6 +2542,7 @@
         console.warn('Country polygon data unavailable; globe markers remain active.', err);
         geoData = [];
         applyTab(currentTab);
+        resetGlobeView(false);
       });
       } catch (error) {
         console.error('Globe initialization failed.', error);
